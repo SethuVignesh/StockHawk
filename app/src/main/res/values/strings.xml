@@ -12,10 +12,10 @@
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
 
   <string name="content_description_add_stock">Add a stock item</string>
-  <string name="init">init</string>
-  <string name="periodic">periodic</string>
-  <string name="symbol">symbol</string>
-  <string name="add">add</string>
-  <string name="internet_error">Internet Connection Error</string>
+  <string name="init" translatable="false">init</string>
+  <string name="periodic" translatable="false">periodic</string>
+  <string name="symbol" translatable="false">symbol</string>
+  <string name="add" translatable="false">add</string>
+  <string name="internet_error" >Internet Connection Error</string>
 
 </resources>
