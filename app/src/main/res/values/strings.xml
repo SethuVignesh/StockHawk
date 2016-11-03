@@ -16,6 +16,6 @@
   <string name="periodic">periodic</string>
   <string name="symbol">symbol</string>
   <string name="add">add</string>
-
+  <string name="internet_error">Internet Connection Error</string>
 
 </resources>

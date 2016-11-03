@@ -8,6 +8,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sam_chordas.android.stockhawk.R;
@@ -41,6 +44,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
    * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
    */
 
+  private static final int CURSOR_LOADER_ID = 0;
+  boolean isConnected;
   /**
    * Used to store the last screen title. For use in {@link #restoreActionBar()}.
    */
@@ -49,23 +54,24 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private CharSequence mTitle;
   private Intent mServiceIntent;
   private ItemTouchHelper mItemTouchHelper;
-  private static final int CURSOR_LOADER_ID = 0;
   private QuoteCursorAdapter mCursorAdapter;
   private Context mContext;
   private Cursor mCursor;
-  boolean isConnected;
-
+  private CoordinatorLayout coordinatorLayout;
+  private TextView textInternetError;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_my_stocks);
     mContext = this;
     ConnectivityManager cm =
         (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-
+    coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
+    textInternetError = (TextView) findViewById(R.id.text_no_network);
     NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
     isConnected = activeNetwork != null &&
         activeNetwork.isConnectedOrConnecting();
-    setContentView(R.layout.activity_my_stocks);
+
     // The intent service is for executing immediate pulls from the Yahoo API
     // GCMTaskService can only schedule tasks, they cannot execute immediately
     mServiceIntent = new Intent(this, StockIntentService.class);
@@ -88,12 +94,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               @Override public void onItemClick(View v, int position) {
                 //TODO:
                 // do something on item click
+                Intent graphIntent = new Intent(mContext, StockDetailActivity.class);
+                                       mCursor.moveToPosition(position);
+                                        graphIntent.putExtra("symbol", mCursor.getString(mCursor.getColumnIndex("symbol")));
+                                        mContext.startActivity(graphIntent);
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
 
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
     fab.attachToRecyclerView(recyclerView);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -165,8 +176,12 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   }
 
   public void networkToast(){
-    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
+//    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
+
+    Snackbar mSnackBar = Snackbar.make(coordinatorLayout,  getResources().getString(R.string.network_toast), Snackbar.LENGTH_LONG);
+    mSnackBar.show();
   }
+
 
   public void restoreActionBar() {
     ActionBar actionBar = getSupportActionBar();
