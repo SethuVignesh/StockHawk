@@ -17,5 +17,8 @@
   <string name="symbol" translatable="false">symbol</string>
   <string name="add" translatable="false">add</string>
   <string name="internet_error" >Internet Connection Error</string>
+  <string name="widget_title" translatable="false">Share Market</string>
+
+  <string name="string_set_background_resource" translatable="false">setBackgroundResource</string>
 
 </resources>
