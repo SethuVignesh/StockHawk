@@ -20,5 +20,6 @@
   <string name="widget_title" translatable="false">Share Market</string>
 
   <string name="string_set_background_resource" translatable="false">setBackgroundResource</string>
+  <string name="already_saved" translatable="true">"This stock is already saved!"</string>
 
 </resources>
