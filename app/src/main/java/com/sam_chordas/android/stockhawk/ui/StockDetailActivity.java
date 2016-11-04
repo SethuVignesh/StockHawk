@@ -37,8 +37,10 @@ public class StockDetailActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_line_graph);
         mLineSet = new LineSet();
         lineChartView = (LineChartView) findViewById(R.id.linechart);
-        initLineChart();
+
         Intent intent = getIntent();
+        maxRange=minRange=(int)Double.parseDouble(intent.getStringExtra(QuoteColumns.BIDPRICE));
+        initLineChart();
         Bundle args = new Bundle();
         args.putString("symbol", intent.getStringExtra("symbol"));
         getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);

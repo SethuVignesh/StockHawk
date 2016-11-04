@@ -97,6 +97,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 Intent graphIntent = new Intent(mContext, StockDetailActivity.class);
                                        mCursor.moveToPosition(position);
                                         graphIntent.putExtra("symbol", mCursor.getString(mCursor.getColumnIndex("symbol")));
+                graphIntent.putExtra(QuoteColumns.BIDPRICE,mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
                                         mContext.startActivity(graphIntent);
               }
             }));
